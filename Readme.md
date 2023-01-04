@@ -4,6 +4,7 @@
 - [Tasks](#tasks)
 - [How To Run the Project](#how-to-run-the-project)
 - [TODO](#todo)
+- [Suggestions or Improvments](#suggestion)
 
 
 ## Tasks
@@ -23,3 +24,11 @@
  - Adding unit test
  - Adding scheduler for scraping
  - Deployment to heroku or AWS or kubernetes 
+ 
+ 
+ ## Suggestions or Improvments
+
+ # Regarding web scraper job
+ - Routes the request with proxy to be protected from getting blocked by target website hitting with same IP
+ - Caching to avoid hitting unnecessary requests if its static website and content do not change more often. We can cache the HTTP request and response and write it to file.
+ - Scrape data at off-peak hours
