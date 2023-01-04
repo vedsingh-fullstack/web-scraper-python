@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  scraper:
+    container_name: scraperscript
+    build: ./app/scraper
+    environment:
+      MONGODB_CONNSTRING: 'mongodb://root:example@mongodb:27017/?authMechanism=DEFAULT'
+    depends_on:
+      - mongodb
+
+  dnlapi:
+    container_name: dnlapi
+    build: ./app/api
+    ports:
+      - "5001:5000"
+    environment:
+      MONGODB_CONNSTRING: 'mongodb://root:example@mongodb:27017/?authMechanism=DEFAULT'
+    depends_on:
+      - mongodb
+      - scraper
+  
+  mongodb:
+    container_name: mongodb
+    image: mongo:5.0
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodbdata:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONG_INITDB_DATABASE: dnldb
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+
+volumes:
+  mongodbdata:
+    driver: local
