@@ -1,11 +1,10 @@
 from pydantic import BaseModel
 
 
-class CatalogueBase(BaseModel):
+class Catalogue(BaseModel):
     manufacturer: str
     category: str
     model: str
-
-class Catalogue(CatalogueBase):
     part: str
     part_category: str
+    
