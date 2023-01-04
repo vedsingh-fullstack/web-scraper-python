@@ -1,9 +1,9 @@
 import requests
-from db.init_db import get_database
+from db.init_db import get_database_client 
 from bs4 import BeautifulSoup
  
 BASE_URL = "https://www.urparts.com"
-
+DB_NAME = "dnl_db"
 
 def get_container_list(url: str, container_class_name: str):
     list = {}
@@ -35,17 +35,21 @@ def get_parts(url: str, container_class_name: str):
 
     for l in container_list:
         link = l.find('a', href=True)
-        if link.span is not None:
-            parts_list[link.text.replace('-', '').split()[0]] = link.text.replace('-', '').split()[1]
+        parts_link_array = link.text.replace('-', '').split()
+        if len(parts_link_array) >= 2:
+            parts_list[parts_link_array[0]] = parts_link_array[1]
 
     return parts_list
      
 def save_catalogue(data):
     try:
-        db = get_database()
+        client = get_database_client()
+        db = client[DB_NAME]
         catalogues = db.catalogues
-        catalogues.insert_many(data)
+        catalogues.insert_many([item for item in data])
+        client.close()
     except Exception as e:
         print(f"Something went wrong{e}") # add logger error instead of print
         # add logic for max retry
+        client.close()
         

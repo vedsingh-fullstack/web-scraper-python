@@ -1,22 +1,26 @@
-from db.init_db import get_database
+from db.init_db import get_database_client
 from fastapi import HTTPException, status
 
+DB_NAME = "dnl_db"
 
 def get_all_catalogue():
     try:
-        db = get_database()
+        client = get_database_client()
+        db = client[DB_NAME]
         catalogues = db.catalogues
         catalogues = list(catalogues.find(limit=100))  # using pagingation
-
+        client.close()
         return catalogues
     except Exception as e:
         #  use logger to print exception useful in logs
+        client.close()
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Something went wrong")
 
 
 def get_catalogue_by_manufacturer(manufacturer: str):
     try:
-        db = get_database()
+        client = get_database_client()
+        db = client[DB_NAME]
         catalogues = db.catalogues
         catalogues = list(catalogues.find({"manufacturer": manufacturer}))  # using pagingation
         

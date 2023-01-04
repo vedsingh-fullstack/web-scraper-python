@@ -16,8 +16,17 @@
 - structured codebase by following the separation of concern design principle
 
 ## How To Run the Project
+ Run the whole application by running below command,  
 
  `docker-compose up`
+
+ Visit http://localhost:5001/docs for swagger documentation and testing the api.
+ Use MongoDB compass to access mongo db or using mongo cli by using below command, 
+
+  `docker exec -it mongodb bash`
+  and then loggin in using user and password
+  `mongo -u root -p example`
+
 
  ## TODO
 
