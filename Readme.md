@@ -30,7 +30,9 @@
 
  ## TODO
 
- - Adding unit test
+ - Moving the db operation from `scraper/catalogue_service.py` -> `save_catalgoue` method to sepearte service to remove dependency of database which makes easier to unit test. 
+ - Moving out the execute_job logic out of scraper/main file. 
+ - Adding unit test around services. 
  - Adding scheduler for scraping
  - Deployment to heroku or AWS or kubernetes 
  
